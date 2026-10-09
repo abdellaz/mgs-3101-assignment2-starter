@@ -1,0 +1,25 @@
+import pandas as pd
+
+# it couldn't read order_value_EUR because there are commas in the numbers
+df = pd.read_csv("dataSales-Export_2019-2020.csv", thousands=",")
+print(df.shape)
+print(df.dtypes)
+print(df.head())
+print(df.isnull().sum())
+print(df[[" order_value_EUR ", " cost "]].agg(["count", "mean", "median", "min", "max", "std"]))
+print(df.groupby([" cost "]).sum())
+print(df.groupby(["category"]).size())
+col = " cost "
+print(df.loc[df[col].idxmax()])
+print(df.loc[df[col].idxmin()])
+
+print(df[" order_value_EUR "].sum())
+total_revenue = df[" order_value_EUR "].sum()
+threshold = 113361000
+
+if total_revenue >= threshold:
+    print("Total revenue is above the threshold.")
+else:
+    print("Total revenue is below the threshold.")
+
+print(df.groupby(["device_type"]).size())
